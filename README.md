@@ -35,6 +35,23 @@ npm run deploy
 
 Config lives in `wrangler.jsonc` (worker name: `fathom`) and `open-next.config.ts`.
 
+`npm run build` only runs `next build`. Cloudflare needs the OpenNext step that writes `.open-next/` before deploy.
+
+### Cloudflare Workers Builds (dashboard)
+
+In the Worker → **Settings → Build**, set:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npx opennextjs-cloudflare build` |
+| Deploy command | `npx wrangler deploy` |
+
+Alternatively, clear the build command and set **Deploy command** to `npm run deploy` (builds + deploys in one step).
+
+Do **not** use `npm run build` as the Cloudflare build command — that skips OpenNext and causes:
+
+`Could not find compiled Open Next config, did you run the build command?`
+
 ### GitHub Actions
 
 A workflow is included at `.github/workflows/deploy.yml`. Add these repository secrets:
@@ -43,15 +60,6 @@ A workflow is included at `.github/workflows/deploy.yml`. Add these repository s
 - `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID
 
 Pushes to `main`/`master` (or manual workflow runs) build with OpenNext and deploy the `fathom` worker.
-
-### Cloudflare dashboard (git)
-
-You can also connect this repo under **Workers & Pages**. Use:
-
-| Setting | Value |
-| --- | --- |
-| Build command | `npx opennextjs-cloudflare build` |
-| Deploy command | `npx wrangler deploy` |
 
 ## Notes
 
