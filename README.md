@@ -6,14 +6,13 @@ Premium marketing site for **Fathom** — an AI-powered website knowledge and in
 
 ## Stack
 
-- Next.js (App Router)
+- Next.js (App Router, static export)
 - TypeScript
 - Tailwind CSS
 - Framer Motion
 - Lucide icons
 
 ## Getting started
-
 
 ```bash
 npm install
@@ -24,19 +23,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Cloudflare deployment
 
-This app deploys to **Cloudflare Workers** via [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare).
+This is a **static site**. `next build` writes HTML/CSS/JS to `out/`, and Wrangler deploys that folder as [Workers static assets](https://developers.cloudflare.com/workers/static-assets/) (no OpenNext, no Worker script).
 
 ```bash
-# Preview in the local Workers runtime
+# Build + preview locally on the Workers runtime
 npm run preview
 
-# Deploy to Cloudflare (requires `wrangler login` or a Cloudflare API token)
+# Build + deploy (requires `wrangler login` or a Cloudflare API token)
 npm run deploy
 ```
 
-Config lives in `wrangler.jsonc` (worker name: `search`) and `open-next.config.ts`.
-
-`npm run build` only runs `next build`. Cloudflare needs the OpenNext step that writes `.open-next/` before deploy.
+Config lives in `wrangler.jsonc` (worker name: `search`).
 
 ### Cloudflare Workers Builds (dashboard)
 
@@ -44,23 +41,11 @@ In the Worker → **Settings → Build**, set:
 
 | Setting | Value |
 | --- | --- |
-| Build command | `npx opennextjs-cloudflare build` |
+| Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
+| Build output / assets | handled by `wrangler.jsonc` → `./out` |
 
-Alternatively, clear the build command and set **Deploy command** to `npm run deploy` (builds + deploys in one step).
-
-Do **not** use `npm run build` as the Cloudflare build command — that skips OpenNext and causes:
-
-`Could not find compiled Open Next config, did you run the build command?`
-
-### GitHub Actions
-
-A workflow is included at `.github/workflows/deploy.yml`. Add these repository secrets:
-
-- `CLOUDFLARE_API_TOKEN` — Workers edit permission
-- `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID
-
-Pushes to `main`/`master` (or manual workflow runs) build with OpenNext and deploy the `search` worker.
+Alternatively, clear the build command and set **Deploy command** to `npm run deploy`.
 
 ## Notes
 
