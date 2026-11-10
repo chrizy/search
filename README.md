@@ -14,6 +14,7 @@ Premium marketing site for **Fathom** — an AI-powered website knowledge and in
 
 ## Getting started
 
+
 ```bash
 npm install
 npm run dev
