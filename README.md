@@ -34,7 +34,7 @@ npm run preview
 npm run deploy
 ```
 
-Config lives in `wrangler.jsonc` (worker name: `fathom`) and `open-next.config.ts`.
+Config lives in `wrangler.jsonc` (worker name: `search`) and `open-next.config.ts`.
 
 `npm run build` only runs `next build`. Cloudflare needs the OpenNext step that writes `.open-next/` before deploy.
 
@@ -60,7 +60,7 @@ A workflow is included at `.github/workflows/deploy.yml`. Add these repository s
 - `CLOUDFLARE_API_TOKEN` — Workers edit permission
 - `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID
 
-Pushes to `main`/`master` (or manual workflow runs) build with OpenNext and deploy the `fathom` worker.
+Pushes to `main`/`master` (or manual workflow runs) build with OpenNext and deploy the `search` worker.
 
 ## Notes
 

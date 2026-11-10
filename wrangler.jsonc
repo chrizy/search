@@ -14,7 +14,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "fathom"
+      "service": "search"
     }
   ],
   "images": {
